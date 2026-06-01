@@ -44,3 +44,6 @@ export interface AccessibilityFontAssetsOptions {
   /** Output directory, relative to the Quartz build output root. */
   outputDirectory: string;
 }
+
+export interface AccessibilitySuiteOptions
+  extends AccessibilityControlsOptions, Partial<AccessibilityFontAssetsOptions> {}

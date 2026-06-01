@@ -21,5 +21,7 @@ interface AccessibilityFontAssetsOptions {
     /** Output directory, relative to the Quartz build output root. */
     outputDirectory: string;
 }
+interface AccessibilitySuiteOptions extends AccessibilityControlsOptions, Partial<AccessibilityFontAssetsOptions> {
+}
 
-export type { AccessibilityControlsOptions, AccessibilityFont, AccessibilityFontAssetsOptions, BeelineReaderOptions, FontSwitcherOptions };
+export type { AccessibilityControlsOptions, AccessibilityFont, AccessibilityFontAssetsOptions, AccessibilitySuiteOptions, BeelineReaderOptions, FontSwitcherOptions };

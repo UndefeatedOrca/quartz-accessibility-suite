@@ -205,6 +205,34 @@ var FontSwitcher_default = ((opts) => {
   return FontSwitcher;
 });
 
-export { AccessibilityControls_default as AccessibilityControls, AccessibilityFontAssets, BeelineReader_default as BeelineReader, FontSwitcher_default as FontSwitcher, AccessibilityControls_default as default };
+// src/index.ts
+var defaultOptions2 = {
+  defaultFont: "default",
+  outputDirectory: "accessibility-fonts"
+};
+var AccessibilitySuite = (userOptions) => {
+  const options = { ...defaultOptions2, ...userOptions };
+  const fontAssets = AccessibilityFontAssets({ outputDirectory: options.outputDirectory });
+  return {
+    name: "AccessibilitySuite",
+    getQuartzComponents(_ctx) {
+      return [
+        AccessibilityControls_default({
+          className: options.className,
+          defaultFont: options.defaultFont
+        })
+      ];
+    },
+    emit(ctx, content, resources) {
+      return fontAssets.emit(ctx, content, resources);
+    },
+    partialEmit(ctx, content, resources, changeEvents) {
+      return fontAssets.partialEmit?.(ctx, content, resources, changeEvents) ?? null;
+    }
+  };
+};
+var src_default = AccessibilitySuite;
+
+export { AccessibilityControls_default as AccessibilityControls, AccessibilityFontAssets, BeelineReader_default as BeelineReader, FontSwitcher_default as FontSwitcher, src_default as default };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map

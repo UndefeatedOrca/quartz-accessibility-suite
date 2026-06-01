@@ -6,6 +6,14 @@ import { AccessibilityFontAssets } from "../src/font-assets";
 import { createCtx } from "./helpers";
 
 describe("accessibility components", () => {
+  it("exports an installable plugin that registers the GUI component", async () => {
+    const index = await fs.readFile("src/index.ts", "utf8");
+
+    expect(index).toContain('name: "AccessibilitySuite"');
+    expect(index).toContain("getQuartzComponents");
+    expect(index).toContain("AccessibilityControls({");
+  });
+
   it("defines BeeLine and font switcher component assets", async () => {
     const beeline = await fs.readFile("src/components/BeelineReader.tsx", "utf8");
     const controls = await fs.readFile("src/components/AccessibilityControls.tsx", "utf8");

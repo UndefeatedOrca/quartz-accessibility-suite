@@ -97,7 +97,8 @@
     "name": "accessibility-suite",
     "displayName": "Accessibility Suite",
     "category": [
-      "component"
+      "component",
+      "emitter"
     ],
     "version": "1.0.0",
     "quartzVersion": ">=5.0.0",

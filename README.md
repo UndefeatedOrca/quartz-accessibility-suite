@@ -10,7 +10,8 @@ This package currently includes:
 
 ## Usage
 
-Install the plugin in a Quartz site, then place it using the Quartz 5 plugin layout block.
+Install the plugin in a Quartz site. The default export is an installable Quartz plugin that
+registers the combined accessibility GUI and copies the bundled font files during the build.
 
 ```yaml
 plugins:
@@ -28,12 +29,16 @@ By default, the installed component renders both the BeeLine toggle and the font
 For advanced TypeScript overrides, import the combined component or individual pieces:
 
 ```ts
-import AccessibilityControls, {
+import AccessibilitySuite, {
+  AccessibilityControls,
   AccessibilityFontAssets,
   BeelineReader,
   FontSwitcher,
 } from "quartz-accessibility-suite";
 ```
+
+Use `AccessibilitySuite()` where Quartz expects an installable plugin factory. Use
+`AccessibilityControls()` only where Quartz expects a layout component constructor.
 
 Add the combined controls where you want the GUI to appear:
 
