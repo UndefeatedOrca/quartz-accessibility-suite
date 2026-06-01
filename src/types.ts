@@ -60,3 +60,22 @@ export interface ExampleComponentOptions {
   /** CSS class name to apply */
   className?: string;
 }
+
+export interface BeelineReaderOptions {
+  /** Extra CSS class name applied to the BeeLine toggle button. */
+  className?: string;
+}
+
+export type AccessibilityFont = "default" | "comic-sans" | "atkinson-hyperlegible" | "opendyslexic";
+
+export interface FontSwitcherOptions {
+  /** Extra CSS class name applied to the font switcher label wrapper. */
+  className?: string;
+  /** Font selected when the user has no stored preference. */
+  defaultFont?: AccessibilityFont;
+}
+
+export interface AccessibilityFontAssetsOptions {
+  /** Output directory, relative to the Quartz build output root. */
+  outputDirectory: string;
+}

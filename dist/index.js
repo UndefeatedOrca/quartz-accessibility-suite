@@ -1,6 +1,7 @@
 import { createRequire } from 'module';
-import path2 from 'path';
+import path3 from 'path';
 import fs from 'fs/promises';
+import { fileURLToPath } from 'url';
 
 createRequire(import.meta.url);
 
@@ -423,7 +424,7 @@ function transformGfmAutolinkLiterals(tree) {
     { ignore: ["link", "linkReference"] }
   );
 }
-function findUrl(_, protocol, domain2, path3, match) {
+function findUrl(_, protocol, domain2, path4, match) {
   let prefix = "";
   if (!previous(match)) {
     return false;
@@ -436,7 +437,7 @@ function findUrl(_, protocol, domain2, path3, match) {
   if (!isCorrectDomain(domain2)) {
     return false;
   }
-  const parts = splitUrl(domain2 + path3);
+  const parts = splitUrl(domain2 + path4);
   if (!parts[0]) return false;
   const result = {
     type: "link",
@@ -3682,7 +3683,7 @@ var defaultOptions3 = {
 var joinSegments = (...segments) => segments.filter((segment) => segment.length > 0).join("/").replace(/\/+/g, "/");
 var writeFile = async (outputDir, slug2, ext, content) => {
   const outputPath = joinSegments(outputDir, `${slug2}${ext}`);
-  await fs.mkdir(path2.dirname(outputPath), { recursive: true });
+  await fs.mkdir(path3.dirname(outputPath), { recursive: true });
   await fs.writeFile(outputPath, content);
   return outputPath;
 };
@@ -3729,6 +3730,48 @@ var ExampleEmitter = (userOptions) => {
     }
   };
 };
+var defaultOptions4 = {
+  outputDirectory: "accessibility-fonts"
+};
+var fontFiles = [
+  "AtkinsonHyperlegible-Bold.ttf",
+  "AtkinsonHyperlegible-BoldItalic.ttf",
+  "AtkinsonHyperlegible-Italic.ttf",
+  "AtkinsonHyperlegible-Regular.ttf",
+  "OpenDyslexic-Bold.otf",
+  "OpenDyslexic-BoldItalic.otf",
+  "OpenDyslexic-Italic.otf",
+  "OpenDyslexic-Regular.otf"
+];
+var packageRoot = path3.resolve(path3.dirname(fileURLToPath(import.meta.url)), "..");
+var sourceFontDir = path3.join(packageRoot, "fonts");
+var copyFontAssets = async (ctx, options) => {
+  const outputDir = path3.join(ctx.argv.output, options.outputDirectory);
+  await fs.mkdir(outputDir, { recursive: true });
+  const outputPaths = [];
+  for (const fileName of fontFiles) {
+    const sourcePath = path3.join(sourceFontDir, fileName);
+    const outputPath = path3.join(outputDir, fileName);
+    await fs.copyFile(sourcePath, outputPath);
+    outputPaths.push(outputPath);
+  }
+  return outputPaths;
+};
+var AccessibilityFontAssets = (userOptions) => {
+  const options = { ...defaultOptions4, ...userOptions };
+  return {
+    name: "AccessibilityFontAssets",
+    async emit(ctx, _content, _resources) {
+      return copyFontAssets(ctx, options);
+    },
+    async *partialEmit(ctx, _content, _resources, _changeEvents) {
+      const outputPaths = await copyFontAssets(ctx, options);
+      for (const outputPath of outputPaths) {
+        yield outputPath;
+      }
+    }
+  };
+};
 
 // node_modules/@quartz-community/utils/dist/lang.js
 function classNames(...classes) {
@@ -3757,6 +3800,7 @@ function u2(e2, t2, n2, o2, i2, u3) {
   var a2, c2, p2 = t2;
   if ("ref" in p2) for (c2 in p2 = {}, t2) "ref" == c2 ? a2 = t2[c2] : p2[c2] = t2[c2];
   var l2 = { type: e2, props: p2, key: n2, ref: a2, __k: null, __: null, __b: 0, __e: null, __c: null, constructor: void 0, __v: --f2, __i: -1, __u: 0, __source: i2, __self: u3 };
+  if ("function" == typeof e2 && (a2 = e2.defaultProps)) for (c2 in a2) void 0 === p2[c2] && (p2[c2] = a2[c2]);
   return l.vnode && l.vnode(l2), l2;
 }
 
@@ -3774,6 +3818,80 @@ var ExampleComponent_default = ((opts) => {
   return Component;
 });
 
-export { ExampleComponent_default as ExampleComponent, ExampleEmitter, ExampleFilter, ExampleTransformer };
+// src/components/styles/beelineReader.scss
+var beelineReader_default = ".beeline-reader {\n  cursor: pointer;\n  padding: 0;\n  position: relative;\n  background: none;\n  border: none;\n  width: 20px;\n  height: 20px;\n  margin: 0;\n  text-align: inherit;\n  flex-shrink: 0;\n}\n.beeline-reader svg {\n  position: absolute;\n  width: 20px;\n  height: 20px;\n  top: calc(50% - 10px);\n  stroke: var(--darkgray);\n  transition: stroke 0.15s ease, opacity 0.15s ease;\n}\n.beeline-reader[aria-pressed=true] svg {\n  stroke: var(--secondary);\n}\n\n:root[data-beeline-reader=on] .center article .beeline-token {\n  color: var(--beeline-token-color, var(--darkgray));\n  transition: color 0.15s ease;\n}";
+
+// src/components/scripts/beeline.inline.ts
+var beeline_inline_default = 'var _="beeline-reader",M="data-beeline-reader",g=".center article",h="p, li, blockquote, td, th, dd, dt",b=".beeline-reader",O="Enable BeeLine reader",R="Disable BeeLine reader",k="#c62828",S="#1565c0",D="#ff8a80",C="#82b1ff";var T=/([\\p{L}\\p{N}][\\p{L}\\p{N}\'_-]*)/gu,H="code, pre, script, style, textarea, svg, math, mjx-container, .katex, .mermaid",c=localStorage.getItem(_)==="on",L=0;function N(t){let e=document.createElement("span");return e.className="beeline-token",e.dataset.beelineToken="true",e.textContent=t,e}function I(t){let e=t.textContent??"";T.lastIndex=0;let o,n=0,l=!1,r=document.createDocumentFragment();for(;(o=T.exec(e))!==null;){l=!0;let[s]=o,i=o.index;i>n&&r.append(e.slice(n,i)),r.appendChild(N(s)),n=i+s.length}return l?(n<e.length&&r.append(e.slice(n)),r):null}function v(t){if(!t.textContent?.trim())return!1;let e=t.parentElement;return!(!e||e.closest(H)||e.closest(".beeline-token"))}function B(t){if(t.dataset.beelineProcessed==="true")return;let e=document.createTreeWalker(t,NodeFilter.SHOW_TEXT),o=[],n=e.nextNode();for(;n;)n instanceof Text&&v(n)&&o.push(n),n=e.nextNode();for(let l of o){let r=I(l);r&&l.replaceWith(r)}t.dataset.beelineProcessed="true"}function G(){for(let t of document.querySelectorAll(g))for(let e of t.querySelectorAll(h))B(e)}function w(){let t=c?R:O;for(let e of document.querySelectorAll(b))e.setAttribute("aria-pressed",c?"true":"false"),e.setAttribute("aria-label",t),e.setAttribute("title",t)}function y(){return document.documentElement.getAttribute("saved-theme")==="dark"?{start:D,end:C,strength:38}:{start:k,end:S,strength:42}}function q(t){let e=[...t.querySelectorAll(".beeline-token")];if(e.length===0)return;let{start:o,end:n,strength:l}=y(),r=[],s=[],i=null;for(let a of e){let d=Math.round(a.getBoundingClientRect().top);i===null||Math.abs(d-i)<=2?s.push(a):(r.push(s),s=[a]),i=d}s.length>0&&r.push(s);for(let[a,d]of r.entries()){let u=d.length;for(let[x,f]of d.entries()){let E=u<=1?.5:x/(u-1),m=a%2===0?E:1-E;f.style.setProperty("--beeline-token-color",`color-mix(in srgb, var(--darkgray) ${100-l}%, color-mix(in srgb, ${o} ${Math.round((1-m)*100)}%, ${n} ${Math.round(m*100)}%) ${l}%)`),f.dataset.beelineLine=a%2===0?"even":"odd"}}}function K(){for(let t of document.querySelectorAll(g))for(let e of t.querySelectorAll(h))q(e)}function A(){c&&(cancelAnimationFrame(L),L=requestAnimationFrame(()=>{K()}))}function p(){document.documentElement.setAttribute(M,c?"on":"off"),c&&(G(),A()),w()}document.addEventListener("nav",()=>{let t=()=>{c=!c,localStorage.setItem(_,c?"on":"off"),p()},e=()=>{A()};for(let o of document.querySelectorAll(b))o.addEventListener("click",t),window.addCleanup(()=>o.removeEventListener("click",t));window.addEventListener("resize",e),window.addCleanup(()=>window.removeEventListener("resize",e)),document.addEventListener("readermodechange",e),window.addCleanup(()=>document.removeEventListener("readermodechange",e)),p()});\n';
+
+// src/components/BeelineReader.tsx
+var enableLabel = "Enable BeeLine reader";
+var BeelineReader_default = ((opts) => {
+  const { className } = opts ?? {};
+  const BeelineReader = ({ displayClass }) => {
+    return /* @__PURE__ */ u2(
+      "button",
+      {
+        class: classNames(displayClass, "beeline-reader", className),
+        type: "button",
+        "aria-label": enableLabel,
+        "aria-pressed": "false",
+        title: enableLabel,
+        children: /* @__PURE__ */ u2(
+          "svg",
+          {
+            xmlns: "http://www.w3.org/2000/svg",
+            viewBox: "0 0 24 24",
+            class: "beelineIcon",
+            fill: "none",
+            stroke: "currentColor",
+            "stroke-width": "1.8",
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round",
+            "aria-hidden": "true",
+            children: [
+              /* @__PURE__ */ u2("path", { d: "M4 6.5h16" }),
+              /* @__PURE__ */ u2("path", { d: "M4 10.5h8" }),
+              /* @__PURE__ */ u2("path", { d: "M4 14.5h16" }),
+              /* @__PURE__ */ u2("path", { d: "M4 18.5h8" }),
+              /* @__PURE__ */ u2("path", { d: "M15.5 9.5h4a1 1 0 0 1 1 1v4a3.5 3.5 0 0 1-3.5 3.5h-1.5z" })
+            ]
+          }
+        )
+      }
+    );
+  };
+  BeelineReader.beforeDOMLoaded = beeline_inline_default;
+  BeelineReader.css = beelineReader_default;
+  return BeelineReader;
+});
+
+// src/components/styles/fontSwitcher.scss
+var fontSwitcher_default = '@font-face {\n  font-family: "Atkinson Hyperlegible";\n  src: local("Atkinson Hyperlegible"), url("/accessibility-fonts/AtkinsonHyperlegible-Regular.ttf") format("truetype");\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n}\n@font-face {\n  font-family: "Atkinson Hyperlegible";\n  src: local("Atkinson Hyperlegible Bold"), url("/accessibility-fonts/AtkinsonHyperlegible-Bold.ttf") format("truetype");\n  font-style: normal;\n  font-weight: 700;\n  font-display: swap;\n}\n@font-face {\n  font-family: "Atkinson Hyperlegible";\n  src: local("Atkinson Hyperlegible Italic"), url("/accessibility-fonts/AtkinsonHyperlegible-Italic.ttf") format("truetype");\n  font-style: italic;\n  font-weight: 400;\n  font-display: swap;\n}\n@font-face {\n  font-family: "Atkinson Hyperlegible";\n  src: local("Atkinson Hyperlegible Bold Italic"), url("/accessibility-fonts/AtkinsonHyperlegible-BoldItalic.ttf") format("truetype");\n  font-style: italic;\n  font-weight: 700;\n  font-display: swap;\n}\n@font-face {\n  font-family: "OpenDyslexic";\n  src: local("OpenDyslexic"), url("/accessibility-fonts/OpenDyslexic-Regular.otf") format("opentype");\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n}\n@font-face {\n  font-family: "OpenDyslexic";\n  src: local("OpenDyslexic Bold"), url("/accessibility-fonts/OpenDyslexic-Bold.otf") format("opentype");\n  font-style: normal;\n  font-weight: 700;\n  font-display: swap;\n}\n@font-face {\n  font-family: "OpenDyslexic";\n  src: local("OpenDyslexic Italic"), url("/accessibility-fonts/OpenDyslexic-Italic.otf") format("opentype");\n  font-style: italic;\n  font-weight: 400;\n  font-display: swap;\n}\n@font-face {\n  font-family: "OpenDyslexic";\n  src: local("OpenDyslexic Bold Italic"), url("/accessibility-fonts/OpenDyslexic-BoldItalic.otf") format("opentype");\n  font-style: italic;\n  font-weight: 700;\n  font-display: swap;\n}\n.accessibility-font-switcher {\n  display: inline-flex;\n  align-items: center;\n  gap: 0.35rem;\n  color: var(--darkgray);\n  font-size: 0.9rem;\n  line-height: 1.2;\n}\n.accessibility-font-switcher select {\n  max-width: 12rem;\n  border: 1px solid var(--lightgray);\n  border-radius: 4px;\n  background: var(--light);\n  color: var(--darkgray);\n  padding: 0.2rem 1.5rem 0.2rem 0.4rem;\n  font: inherit;\n}\n\n:root[data-accessibility-font=comic-sans] body,\n:root[data-accessibility-font=comic-sans] button,\n:root[data-accessibility-font=comic-sans] input,\n:root[data-accessibility-font=comic-sans] select,\n:root[data-accessibility-font=comic-sans] textarea {\n  font-family: "Comic Sans MS", "Comic Sans", "Comic Neue", cursive, sans-serif !important;\n}\n\n:root[data-accessibility-font=atkinson-hyperlegible] body,\n:root[data-accessibility-font=atkinson-hyperlegible] button,\n:root[data-accessibility-font=atkinson-hyperlegible] input,\n:root[data-accessibility-font=atkinson-hyperlegible] select,\n:root[data-accessibility-font=atkinson-hyperlegible] textarea {\n  font-family: "Atkinson Hyperlegible", "Segoe UI", sans-serif !important;\n}\n\n:root[data-accessibility-font=opendyslexic] body,\n:root[data-accessibility-font=opendyslexic] button,\n:root[data-accessibility-font=opendyslexic] input,\n:root[data-accessibility-font=opendyslexic] select,\n:root[data-accessibility-font=opendyslexic] textarea {\n  font-family: "OpenDyslexic", "Segoe UI", sans-serif !important;\n}';
+
+// src/components/scripts/font-switcher.inline.ts
+var font_switcher_inline_default = 'var a="accessibility-font",d="data-accessibility-font",u=".accessibility-font-switcher select",f=new Set(["default","comic-sans","atkinson-hyperlegible","opendyslexic"]);function c(e){return e&&f.has(e)?e:"default"}function S(e){return c(e.dataset.defaultFont)}function m(e){return c(localStorage.getItem(a)??S(e))}function i(e){document.documentElement.setAttribute(d,e)}function r(e){for(let t of document.querySelectorAll(u))t.value=e}document.addEventListener("nav",()=>{let e=[...document.querySelectorAll(u)],t=e[0];if(!t)return;let l=m(t);i(l),r(l);for(let n of e){let s=()=>{let o=c(n.value);localStorage.setItem(a,o),i(o),r(o)};n.addEventListener("change",s),window.addCleanup(()=>n.removeEventListener("change",s))}});\n';
+
+// src/components/FontSwitcher.tsx
+var fontOptions = [
+  { value: "default", label: "Default font" },
+  { value: "comic-sans", label: "Comic Sans" },
+  { value: "atkinson-hyperlegible", label: "Atkinson Hyperlegible" },
+  { value: "opendyslexic", label: "OpenDyslexic" }
+];
+var FontSwitcher_default = ((opts) => {
+  const { className, defaultFont = "default" } = opts ?? {};
+  const FontSwitcher = ({ displayClass }) => {
+    return /* @__PURE__ */ u2("label", { class: classNames(displayClass, "accessibility-font-switcher", className), children: [
+      /* @__PURE__ */ u2("span", { class: "accessibility-font-switcher-label", children: "Font" }),
+      /* @__PURE__ */ u2("select", { "aria-label": "Reading font", "data-default-font": defaultFont, children: fontOptions.map(({ value, label }) => /* @__PURE__ */ u2("option", { value, children: label })) })
+    ] });
+  };
+  FontSwitcher.css = fontSwitcher_default;
+  FontSwitcher.afterDOMLoaded = font_switcher_inline_default;
+  return FontSwitcher;
+});
+
+export { AccessibilityFontAssets, BeelineReader_default as BeelineReader, ExampleComponent_default as ExampleComponent, ExampleEmitter, ExampleFilter, ExampleTransformer, FontSwitcher_default as FontSwitcher };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map

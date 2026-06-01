@@ -1,29 +1,29 @@
 {
-  "name": "@quartz-community/plugin-template",
+  "name": "quartz-accessibility-suite",
   "version": "0.1.0",
-  "description": "Template repository for Quartz community plugins.",
+  "description": "Optional accessibility components for Quartz sites.",
   "type": "module",
   "license": "MIT",
   "author": "Quartz Community",
-  "homepage": "https://quartz.jzhao.xyz",
+  "homepage": "https://github.com/quartz-community/quartz-accessibility-suite",
   "repository": {
     "type": "git",
-    "url": "https://github.com/quartz-community/plugin-template"
+    "url": "https://github.com/quartz-community/quartz-accessibility-suite"
   },
   "keywords": [
     "quartz",
     "quartz-plugin",
-    "plugin-template",
-    "remark",
-    "rehype",
-    "mdast",
-    "hast"
+    "accessibility",
+    "beeline",
+    "dyslexia",
+    "component"
   ],
   "files": [
     "dist",
     "README.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "fonts"
   ],
   "exports": {
     ".": {
@@ -94,30 +94,45 @@
     "vitest": "^2.1.9"
   },
   "quartz": {
-    "name": "plugin-template",
-    "displayName": "Plugin Template",
-    "category": "transformer",
+    "name": "accessibility-suite",
+    "displayName": "Accessibility Suite",
+    "category": [
+      "component",
+      "emitter"
+    ],
     "version": "1.0.0",
     "quartzVersion": ">=5.0.0",
     "dependencies": [],
     "defaultOrder": 50,
     "defaultEnabled": true,
-    "defaultOptions": {},
+    "defaultOptions": {
+      "outputDirectory": "accessibility-fonts",
+      "defaultFont": "default"
+    },
     "optionSchema": {
-      "highlightToken": {
+      "outputDirectory": {
+        "type": "string"
+      },
+      "defaultFont": {
         "type": "enum",
         "values": [
-          "==",
-          "**",
-          "~~"
+          "default",
+          "comic-sans",
+          "atkinson-hyperlegible",
+          "opendyslexic"
         ]
       }
     },
     "components": {
-      "ExampleComponent": {
-        "displayName": "Example Component",
+      "BeelineReader": {
+        "displayName": "BeeLine Reader",
         "defaultPosition": "right",
         "defaultPriority": 50
+      },
+      "FontSwitcher": {
+        "displayName": "Font Switcher",
+        "defaultPosition": "right",
+        "defaultPriority": 51
       }
     }
   },

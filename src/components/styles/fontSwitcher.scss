@@ -1,0 +1,128 @@
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src:
+    local("Atkinson Hyperlegible"),
+    url("/accessibility-fonts/AtkinsonHyperlegible-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src:
+    local("Atkinson Hyperlegible Bold"),
+    url("/accessibility-fonts/AtkinsonHyperlegible-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src:
+    local("Atkinson Hyperlegible Italic"),
+    url("/accessibility-fonts/AtkinsonHyperlegible-Italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  src:
+    local("Atkinson Hyperlegible Bold Italic"),
+    url("/accessibility-fonts/AtkinsonHyperlegible-BoldItalic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src:
+    local("OpenDyslexic"),
+    url("/accessibility-fonts/OpenDyslexic-Regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src:
+    local("OpenDyslexic Bold"),
+    url("/accessibility-fonts/OpenDyslexic-Bold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src:
+    local("OpenDyslexic Italic"),
+    url("/accessibility-fonts/OpenDyslexic-Italic.otf") format("opentype");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src:
+    local("OpenDyslexic Bold Italic"),
+    url("/accessibility-fonts/OpenDyslexic-BoldItalic.otf") format("opentype");
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+}
+
+.accessibility-font-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--darkgray);
+  font-size: 0.9rem;
+  line-height: 1.2;
+
+  & select {
+    max-width: 12rem;
+    border: 1px solid var(--lightgray);
+    border-radius: 4px;
+    background: var(--light);
+    color: var(--darkgray);
+    padding: 0.2rem 1.5rem 0.2rem 0.4rem;
+    font: inherit;
+  }
+}
+
+:root[data-accessibility-font="comic-sans"] {
+  body,
+  button,
+  input,
+  select,
+  textarea {
+    font-family: "Comic Sans MS", "Comic Sans", "Comic Neue", cursive, sans-serif !important;
+  }
+}
+
+:root[data-accessibility-font="atkinson-hyperlegible"] {
+  body,
+  button,
+  input,
+  select,
+  textarea {
+    font-family: "Atkinson Hyperlegible", "Segoe UI", sans-serif !important;
+  }
+}
+
+:root[data-accessibility-font="opendyslexic"] {
+  body,
+  button,
+  input,
+  select,
+  textarea {
+    font-family: "OpenDyslexic", "Segoe UI", sans-serif !important;
+  }
+}
