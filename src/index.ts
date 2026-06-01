@@ -1,5 +1,4 @@
 import type { BuildCtx, ProcessedContent, QuartzEmitterPlugin } from "@quartz-community/types";
-import AccessibilityControls from "./components/AccessibilityControls";
 import { AccessibilityFontAssets } from "./font-assets";
 import type { AccessibilitySuiteOptions } from "./types";
 
@@ -17,14 +16,6 @@ const AccessibilitySuite: QuartzEmitterPlugin<Partial<AccessibilitySuiteOptions>
 
   return {
     name: "AccessibilitySuite",
-    getQuartzComponents(_ctx: BuildCtx) {
-      return [
-        AccessibilityControls({
-          className: options.className,
-          defaultFont: options.defaultFont,
-        }),
-      ];
-    },
     emit(ctx: BuildCtx, content: ProcessedContent[], resources) {
       return fontAssets.emit(ctx, content, resources);
     },
@@ -37,6 +28,7 @@ const AccessibilitySuite: QuartzEmitterPlugin<Partial<AccessibilitySuiteOptions>
 export default AccessibilitySuite;
 export { AccessibilityFontAssets } from "./font-assets";
 export { default as AccessibilityControls } from "./components/AccessibilityControls";
+export { default as QuartzAccessibilitySuite } from "./components/AccessibilityControls";
 export { default as BeelineReader } from "./components/BeelineReader";
 export { default as FontSwitcher } from "./components/FontSwitcher";
 

@@ -160,6 +160,6 @@ var FontSwitcher_default = ((opts) => {
   return FontSwitcher;
 });
 
-export { AccessibilityControls_default as AccessibilityControls, BeelineReader_default as BeelineReader, FontSwitcher_default as FontSwitcher };
+export { AccessibilityControls_default as AccessibilityControls, BeelineReader_default as BeelineReader, FontSwitcher_default as FontSwitcher, AccessibilityControls_default as QuartzAccessibilitySuite };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map

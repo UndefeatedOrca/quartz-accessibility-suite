@@ -25,6 +25,9 @@ plugins:
 ```
 
 By default, the installed component renders both the BeeLine toggle and the font switcher.
+The package also exports this combined component as `QuartzAccessibilitySuite`, matching the
+PascalCase name Quartz uses when resolving the `quartz-accessibility-suite` source into a layout
+component.
 
 For advanced TypeScript overrides, import the combined component or individual pieces:
 
@@ -34,6 +37,7 @@ import AccessibilitySuite, {
   AccessibilityFontAssets,
   BeelineReader,
   FontSwitcher,
+  QuartzAccessibilitySuite,
 } from "quartz-accessibility-suite";
 ```
 

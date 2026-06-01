@@ -124,6 +124,11 @@
       }
     },
     "components": {
+      "QuartzAccessibilitySuite": {
+        "displayName": "Accessibility Suite",
+        "defaultPosition": "right",
+        "defaultPriority": 50
+      },
       "AccessibilityControls": {
         "displayName": "Accessibility Controls",
         "defaultPosition": "right",

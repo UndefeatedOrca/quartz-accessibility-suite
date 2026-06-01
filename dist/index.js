@@ -4,6 +4,48 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 createRequire(import.meta.url);
+var defaultOptions = {
+  outputDirectory: "accessibility-fonts"
+};
+var fontFiles = [
+  "AtkinsonHyperlegible-Bold.ttf",
+  "AtkinsonHyperlegible-BoldItalic.ttf",
+  "AtkinsonHyperlegible-Italic.ttf",
+  "AtkinsonHyperlegible-Regular.ttf",
+  "OpenDyslexic-Bold.otf",
+  "OpenDyslexic-BoldItalic.otf",
+  "OpenDyslexic-Italic.otf",
+  "OpenDyslexic-Regular.otf"
+];
+var packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+var sourceFontDir = path.join(packageRoot, "fonts");
+var copyFontAssets = async (ctx, options) => {
+  const outputDir = path.join(ctx.argv.output, options.outputDirectory);
+  await fs.mkdir(outputDir, { recursive: true });
+  const outputPaths = [];
+  for (const fileName of fontFiles) {
+    const sourcePath = path.join(sourceFontDir, fileName);
+    const outputPath = path.join(outputDir, fileName);
+    await fs.copyFile(sourcePath, outputPath);
+    outputPaths.push(outputPath);
+  }
+  return outputPaths;
+};
+var AccessibilityFontAssets = (userOptions) => {
+  const options = { ...defaultOptions, ...userOptions };
+  return {
+    name: "AccessibilityFontAssets",
+    async emit(ctx, _content, _resources) {
+      return copyFontAssets(ctx, options);
+    },
+    async *partialEmit(ctx, _content, _resources, _changeEvents) {
+      const outputPaths = await copyFontAssets(ctx, options);
+      for (const outputPath of outputPaths) {
+        yield outputPath;
+      }
+    }
+  };
+};
 
 // node_modules/@quartz-community/utils/dist/lang.js
 function classNames(...classes) {
@@ -94,48 +136,6 @@ var AccessibilityControls_default = ((opts) => {
   AccessibilityControls.beforeDOMLoaded = combinedScript;
   return AccessibilityControls;
 });
-var defaultOptions = {
-  outputDirectory: "accessibility-fonts"
-};
-var fontFiles = [
-  "AtkinsonHyperlegible-Bold.ttf",
-  "AtkinsonHyperlegible-BoldItalic.ttf",
-  "AtkinsonHyperlegible-Italic.ttf",
-  "AtkinsonHyperlegible-Regular.ttf",
-  "OpenDyslexic-Bold.otf",
-  "OpenDyslexic-BoldItalic.otf",
-  "OpenDyslexic-Italic.otf",
-  "OpenDyslexic-Regular.otf"
-];
-var packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-var sourceFontDir = path.join(packageRoot, "fonts");
-var copyFontAssets = async (ctx, options) => {
-  const outputDir = path.join(ctx.argv.output, options.outputDirectory);
-  await fs.mkdir(outputDir, { recursive: true });
-  const outputPaths = [];
-  for (const fileName of fontFiles) {
-    const sourcePath = path.join(sourceFontDir, fileName);
-    const outputPath = path.join(outputDir, fileName);
-    await fs.copyFile(sourcePath, outputPath);
-    outputPaths.push(outputPath);
-  }
-  return outputPaths;
-};
-var AccessibilityFontAssets = (userOptions) => {
-  const options = { ...defaultOptions, ...userOptions };
-  return {
-    name: "AccessibilityFontAssets",
-    async emit(ctx, _content, _resources) {
-      return copyFontAssets(ctx, options);
-    },
-    async *partialEmit(ctx, _content, _resources, _changeEvents) {
-      const outputPaths = await copyFontAssets(ctx, options);
-      for (const outputPath of outputPaths) {
-        yield outputPath;
-      }
-    }
-  };
-};
 
 // src/components/styles/beelineReader.scss
 var beelineReader_default = ".beeline-reader {\n  cursor: pointer;\n  padding: 0;\n  position: relative;\n  background: none;\n  border: none;\n  width: 20px;\n  height: 20px;\n  margin: 0;\n  text-align: inherit;\n  flex-shrink: 0;\n}\n.beeline-reader svg {\n  position: absolute;\n  width: 20px;\n  height: 20px;\n  top: calc(50% - 10px);\n  stroke: var(--darkgray);\n  transition: stroke 0.15s ease, opacity 0.15s ease;\n}\n.beeline-reader[aria-pressed=true] svg {\n  stroke: var(--secondary);\n}\n\n:root[data-beeline-reader=on] .center article .beeline-token {\n  color: var(--beeline-token-color, var(--darkgray));\n  transition: color 0.15s ease;\n}";
@@ -215,14 +215,6 @@ var AccessibilitySuite = (userOptions) => {
   const fontAssets = AccessibilityFontAssets({ outputDirectory: options.outputDirectory });
   return {
     name: "AccessibilitySuite",
-    getQuartzComponents(_ctx) {
-      return [
-        AccessibilityControls_default({
-          className: options.className,
-          defaultFont: options.defaultFont
-        })
-      ];
-    },
     emit(ctx, content, resources) {
       return fontAssets.emit(ctx, content, resources);
     },
@@ -233,6 +225,6 @@ var AccessibilitySuite = (userOptions) => {
 };
 var src_default = AccessibilitySuite;
 
-export { AccessibilityControls_default as AccessibilityControls, AccessibilityFontAssets, BeelineReader_default as BeelineReader, FontSwitcher_default as FontSwitcher, src_default as default };
+export { AccessibilityControls_default as AccessibilityControls, AccessibilityFontAssets, BeelineReader_default as BeelineReader, FontSwitcher_default as FontSwitcher, AccessibilityControls_default as QuartzAccessibilitySuite, src_default as default };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map

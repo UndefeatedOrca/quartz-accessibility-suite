@@ -18,4 +18,4 @@ interface BeelineReaderOptions {
 }
 declare const _default: (opts?: BeelineReaderOptions) => QuartzComponent;
 
-export { _default$1 as AccessibilityControls, type AccessibilityControlsOptions, type AccessibilityFont, _default as BeelineReader, type BeelineReaderOptions, _default$2 as FontSwitcher, type FontSwitcherOptions };
+export { _default$1 as AccessibilityControls, type AccessibilityControlsOptions, type AccessibilityFont, _default as BeelineReader, type BeelineReaderOptions, _default$2 as FontSwitcher, type FontSwitcherOptions, _default$1 as QuartzAccessibilitySuite };
