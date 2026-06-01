@@ -1,12 +1,5 @@
 import { QuartzComponent } from '@quartz-community/types';
 
-interface ExampleComponentOptions {
-    prefix?: string;
-    suffix?: string;
-    className?: string;
-}
-declare const _default$2: (opts?: ExampleComponentOptions) => QuartzComponent;
-
 interface BeelineReaderOptions {
     className?: string;
 }
@@ -19,4 +12,4 @@ interface FontSwitcherOptions {
 }
 declare const _default: (opts?: FontSwitcherOptions) => QuartzComponent;
 
-export { type AccessibilityFont, _default$1 as BeelineReader, type BeelineReaderOptions, _default$2 as ExampleComponent, type ExampleComponentOptions, _default as FontSwitcher, type FontSwitcherOptions };
+export { type AccessibilityFont, _default$1 as BeelineReader, type BeelineReaderOptions, _default as FontSwitcher, type FontSwitcherOptions };
