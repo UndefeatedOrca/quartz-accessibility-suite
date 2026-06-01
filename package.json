@@ -97,8 +97,7 @@
     "name": "accessibility-suite",
     "displayName": "Accessibility Suite",
     "category": [
-      "component",
-      "emitter"
+      "component"
     ],
     "version": "1.0.0",
     "quartzVersion": ">=5.0.0",
@@ -124,15 +123,20 @@
       }
     },
     "components": {
+      "AccessibilityControls": {
+        "displayName": "Accessibility Controls",
+        "defaultPosition": "right",
+        "defaultPriority": 50
+      },
       "BeelineReader": {
         "displayName": "BeeLine Reader",
         "defaultPosition": "right",
-        "defaultPriority": 50
+        "defaultPriority": 51
       },
       "FontSwitcher": {
         "displayName": "Font Switcher",
         "defaultPosition": "right",
-        "defaultPriority": 51
+        "defaultPriority": 52
       }
     }
   },

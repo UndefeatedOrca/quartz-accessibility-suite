@@ -1,7 +1,10 @@
+export { default } from "./components/AccessibilityControls";
 export { AccessibilityFontAssets } from "./font-assets";
+export { default as AccessibilityControls } from "./components/AccessibilityControls";
 export { default as BeelineReader } from "./components/BeelineReader";
 export { default as FontSwitcher } from "./components/FontSwitcher";
 
+export type { AccessibilityControlsOptions } from "./components/AccessibilityControls";
 export type { AccessibilityFontAssetsOptions } from "./types";
 
 export type { BeelineReaderOptions } from "./components/BeelineReader";

@@ -8,13 +8,16 @@ import { createCtx } from "./helpers";
 describe("accessibility components", () => {
   it("defines BeeLine and font switcher component assets", async () => {
     const beeline = await fs.readFile("src/components/BeelineReader.tsx", "utf8");
+    const controls = await fs.readFile("src/components/AccessibilityControls.tsx", "utf8");
     const fontSwitcher = await fs.readFile("src/components/FontSwitcher.tsx", "utf8");
     const beelineScript = await fs.readFile("src/components/scripts/beeline.inline.ts", "utf8");
     const fontSwitcherStyles = await fs.readFile("src/components/styles/fontSwitcher.scss", "utf8");
 
+    expect(controls).toContain("AccessibilityControls.beforeDOMLoaded");
     expect(beeline).toContain("BeelineReader.beforeDOMLoaded");
     expect(fontSwitcher).toContain("FontSwitcher.afterDOMLoaded");
     expect(beelineScript).toContain("data-beeline-reader");
+    expect(beelineScript).toContain("quartz-accessibility-suite:beeline-reader");
     expect(fontSwitcherStyles).toContain("Atkinson Hyperlegible");
     expect(fontSwitcherStyles).toContain("OpenDyslexic");
   });

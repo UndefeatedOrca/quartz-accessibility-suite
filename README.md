@@ -10,27 +10,52 @@ This package currently includes:
 
 ## Usage
 
-Install the plugin in a Quartz site, then add the components to your layout.
+Install the plugin in a Quartz site, then place it using the Quartz 5 plugin layout block.
 
-```ts
-import { AccessibilityFontAssets, BeelineReader, FontSwitcher } from "quartz-accessibility-suite";
+```yaml
+plugins:
+  - source: github:your-username/quartz-accessibility-suite
+    enabled: true
+    options:
+      defaultFont: default
+    layout:
+      position: right
+      priority: 50
 ```
 
-Register the emitter with your Quartz emitters:
+By default, the installed component renders both the BeeLine toggle and the font switcher.
+
+For advanced TypeScript overrides, import the combined component or individual pieces:
 
 ```ts
-Plugin.AccessibilityFontAssets();
+import AccessibilityControls, {
+  AccessibilityFontAssets,
+  BeelineReader,
+  FontSwitcher,
+} from "quartz-accessibility-suite";
 ```
 
-Add the components where you want the controls to appear:
+Add the combined controls where you want the GUI to appear:
 
 ```ts
-Component.BeelineReader();
-Component.FontSwitcher();
+AccessibilityControls();
 ```
 
-The font switcher stores the selected font in `localStorage` and applies it to `body`, form fields,
-and buttons. The BeeLine toggle also stores its state in `localStorage`.
+Or add the controls separately:
+
+```ts
+BeelineReader();
+FontSwitcher();
+```
+
+The optional `AccessibilityFontAssets` emitter can copy the bundled font files when used from a
+TypeScript plugin override. The default component still works without it, but Atkinson Hyperlegible
+and OpenDyslexic need the font files available at `/accessibility-fonts/` to render as web fonts.
+
+The font switcher stores the selected font in `localStorage` under
+`quartz-accessibility-suite:accessibility-font` and applies it to `body`, form fields, and buttons.
+The BeeLine toggle stores its state under `quartz-accessibility-suite:beeline-reader`. BeeLine starts
+off for a clean browser profile.
 
 ## Font Assets
 

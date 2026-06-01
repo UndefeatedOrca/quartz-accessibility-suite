@@ -1,0 +1,8 @@
+@use "./beelineReader.scss";
+@use "./fontSwitcher.scss";
+
+.accessibility-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}

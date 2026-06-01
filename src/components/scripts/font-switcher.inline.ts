@@ -1,4 +1,4 @@
-const FONT_STORAGE_KEY = "accessibility-font";
+const FONT_STORAGE_KEY = "quartz-accessibility-suite:accessibility-font";
 const FONT_ATTRIBUTE = "data-accessibility-font";
 const FONT_SWITCHER_SELECTOR = ".accessibility-font-switcher select";
 const VALID_FONTS = new Set(["default", "comic-sans", "atkinson-hyperlegible", "opendyslexic"]);

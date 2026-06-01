@@ -11,9 +11,15 @@ interface FontSwitcherOptions {
     /** Font selected when the user has no stored preference. */
     defaultFont?: AccessibilityFont;
 }
+interface AccessibilityControlsOptions {
+    /** Extra CSS class name applied to the combined controls wrapper. */
+    className?: string;
+    /** Font selected when the user has no stored preference. */
+    defaultFont?: AccessibilityFont;
+}
 interface AccessibilityFontAssetsOptions {
     /** Output directory, relative to the Quartz build output root. */
     outputDirectory: string;
 }
 
-export type { AccessibilityFont, AccessibilityFontAssetsOptions, BeelineReaderOptions, FontSwitcherOptions };
+export type { AccessibilityControlsOptions, AccessibilityFont, AccessibilityFontAssetsOptions, BeelineReaderOptions, FontSwitcherOptions };

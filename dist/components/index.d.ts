@@ -1,15 +1,21 @@
 import { QuartzComponent } from '@quartz-community/types';
 
-interface BeelineReaderOptions {
-    className?: string;
-}
-declare const _default$1: (opts?: BeelineReaderOptions) => QuartzComponent;
-
 type AccessibilityFont = "default" | "comic-sans" | "atkinson-hyperlegible" | "opendyslexic";
 interface FontSwitcherOptions {
     className?: string;
     defaultFont?: AccessibilityFont;
 }
-declare const _default: (opts?: FontSwitcherOptions) => QuartzComponent;
+declare const _default$2: (opts?: FontSwitcherOptions) => QuartzComponent;
 
-export { type AccessibilityFont, _default$1 as BeelineReader, type BeelineReaderOptions, _default as FontSwitcher, type FontSwitcherOptions };
+interface AccessibilityControlsOptions {
+    className?: string;
+    defaultFont?: AccessibilityFont;
+}
+declare const _default$1: (opts?: AccessibilityControlsOptions) => QuartzComponent;
+
+interface BeelineReaderOptions {
+    className?: string;
+}
+declare const _default: (opts?: BeelineReaderOptions) => QuartzComponent;
+
+export { _default$1 as AccessibilityControls, type AccessibilityControlsOptions, type AccessibilityFont, _default as BeelineReader, type BeelineReaderOptions, _default$2 as FontSwitcher, type FontSwitcherOptions };

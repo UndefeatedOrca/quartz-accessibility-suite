@@ -1,4 +1,4 @@
-const STORAGE_KEY = "beeline-reader";
+const STORAGE_KEY = "quartz-accessibility-suite:beeline-reader";
 const ROOT_ATTRIBUTE = "data-beeline-reader";
 const ARTICLE_SELECTOR = ".center article";
 const BLOCK_SELECTOR = "p, li, blockquote, td, th, dd, dt";

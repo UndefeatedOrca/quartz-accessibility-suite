@@ -1,3 +1,5 @@
+export { default as AccessibilityControls } from "./AccessibilityControls";
+export type { AccessibilityControlsOptions } from "./AccessibilityControls";
 export { default as BeelineReader } from "./BeelineReader";
 export type { BeelineReaderOptions } from "./BeelineReader";
 export { default as FontSwitcher } from "./FontSwitcher";
